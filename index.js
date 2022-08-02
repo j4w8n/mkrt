@@ -41,14 +41,14 @@ program
     const route = options.server ? 'server' : options.page ? 'page' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
 
-    // try {
-    //   if (!fs.existsSync(dir)) {
-    //     console.log(`Cannot find ${dir}. Are you in the correct directory?`)
-    //     process.exit(1)
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      if (!fs.existsSync(dir)) {
+        console.log(`Cannot find ${dir}. Are you in the correct directory?`)
+        process.exit(1)
+      }
+    } catch (error) {
+      console.log(error)
+    }
     
     switch (route) {
       case 'server':
@@ -105,7 +105,7 @@ program
         }
 
         try {
-          fs.copyFileSync(`templates/${src}`, path.join(full_path, dest))
+          fs.copyFileSync(path.join(__dirname, 'templates', src), path.join(full_path, dest))
         } catch (error) {
           console.log(error)
         }
