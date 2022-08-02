@@ -13,7 +13,7 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 ## Installation
 
-`[p]npm add mkrt` or `yarn add mkrt`
+`[p]npm add -g mkrt` or `yarn global add mkrt`
 
 ## Usage
 
