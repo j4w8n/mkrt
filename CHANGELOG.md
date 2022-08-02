@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - clarifies install command should be global
 
+### Fixed
+
+- +server.Xs template files to import type RequestHandler, not GET
+
 ## [0.1.1] - 2022-08-02
 
 ### Changed
