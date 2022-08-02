@@ -1,4 +1,4 @@
-/** @type {import('./$types').GET} */
+/** @type {import('./$types').RequestHandler} */
 
 export const GET = () => {
 
