@@ -44,13 +44,13 @@ Arguments for `config`. Defaults are listed first.
 
 Some are overrides for the default config, others are stand-alone.
 
-`-n, --named-layout <name>` adds `@<name>` to .svelte files (ex, +page@alternate.svelte)
-`-c, --codekit` adds sensible starter code to files
-`--no-codekit` don't add starter code to files
-`-t, --typescript` use .ts file extensions
-`-j, --javascript` use .js file extensions
-`-p, --page` route is a +page.svelte file
-`-s, --server` route is a +server.[ts|js] file
+- `-n, --named-layout <name>` adds `@<name>` to .svelte files (ex, +page@alternate.svelte)
+- `-c, --codekit` adds sensible starter code to files
+- `--no-codekit` don't add starter code to files
+- `-t, --typescript` use .ts file extensions
+- `-j, --javascript` use .js file extensions
+- `-p, --page` route is a +page.svelte file
+- `-s, --server` route is a +server.[ts|js] file
 
 ### Examples
 
