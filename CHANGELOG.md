@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- uncommented code which verifies mkrt is running in a project root
+
+### Fixed
+
+- reference to template files, when copying
+
 ## [0.1.0] - 2022-08-02
 
 ### Added
