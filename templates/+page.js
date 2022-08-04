@@ -1,4 +1,4 @@
-import { error, redirect } from '@sveltejs/kit/data'
+import { error, redirect } from '@sveltejs/kit'
 /** @type {import('./$types').Load} */
 
 export const load = () => {
