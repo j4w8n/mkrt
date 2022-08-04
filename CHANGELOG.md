@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing to see here
+### Changed
+
+- renames @sveltejs/kit/data to @sveltejs/kit
 
 ## [0.1.2] - 2022-08-02
 
