@@ -1,11 +1,15 @@
 #!/usr/bin/env node
-const prompts = require('prompts')
-const { Command, Option, Argument } = require('commander')
-const fs = require('fs')
-const path = require('path')
-const packageJson = require('./package.json')
-const config = require('./config.json')
+import prompts from 'prompts'
+import { Command, Option, Argument } from 'commander'
+import fs from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { blue, green, red } from 'kleur/colors'
+import packageJson from './package.json' assert { type: "json" }
+import config from './config.json' assert { type: "json" }
+
 const program = new Command()
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 program
   .command('config')
@@ -15,7 +19,7 @@ program
   .action((option, value) => {
     config[option] = value
     fs.writeFileSync('./config.json', JSON.stringify(config), 'utf8')
-    console.log('Configuration changed!', config)
+    console.log(blue('Configuration changed!'), config)
     process.exit(1)
   })
 
@@ -45,17 +49,17 @@ program
       try {
         fs.copyFileSync(src, dest)
       } catch (error) {
-        console.log(error)
+        console.log(red(error))
       }
     }
 
     try {
       if (!fs.existsSync(root)) {
-        console.log(`Cannot find ${root}. Are you in your project's root directory?`)
+        console.log(blue(`Cannot find ${root}. Are you in your project's root directory?`))
         process.exit(1)
       }
     } catch (error) {
-      console.log(error)
+      console.log(red(error))
     }
     
     switch (route) {
@@ -67,7 +71,7 @@ program
         break;
     } 
 
-    any_exist = files.some(file => fs.existsSync(path.join(dir_path, file)))
+    const any_exist = files.some(file => fs.existsSync(path.join(dir_path, file)))
     if (any_exist) {
       let response = await prompts({
         type: 'confirm',
@@ -89,10 +93,11 @@ program
         try {
           fs.writeFileSync(path.join(dir_path, file),'')
         } catch (error) {
-          console.log(error)
+          console.log(red(error))
         }
       })
     } else {
+      console.log(blue(`Creating route ${dir_path}...`))
       for (let i = 0; i < files.length; i++) {
         let template = files[i]
         const parts = files[i].split('@')
@@ -112,7 +117,7 @@ program
         create_file(src, dst)
       }
     }
-    console.log('Route created!')
+    console.log(green('Done!'))
   })
 
 program.parse()

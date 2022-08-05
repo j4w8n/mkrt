@@ -31,6 +31,8 @@
   "homepage": "https://github.com/j4w8n/mkrt#readme",
   "dependencies": {
     "commander": "9.4.0",
+    "kleur": "4.1.5",
     "prompts": "2.4.2"
-  }
+  },
+  "type": "module"
 }
