@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- using -s and -n throws error
+
 ### Changed
 
 - renames @sveltejs/kit/data to @sveltejs/kit
+- check if route files exist in directory, instead of checking if directory has any type of file
+- clarifies some code verbiage
 
 ## [0.1.2] - 2022-08-02
 
