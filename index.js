@@ -18,7 +18,10 @@ const create_file = (src, dest) => {
 const program = new Command()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const config_file = path.join(process.cwd(), 'mkrt.config.json')
-
+const svelte_config_file = path.join(process.cwd(), 'svelte.config.js')
+const { default: sk_config } = await import(`${pathToFileURL(svelte_config_file).href}`)
+const route_source = sk_config.kit.files?.routes || null
+console.log(route_source)
 try {
   if (!fs.existsSync(config_file)) {
     let response = await prompts({
@@ -57,7 +60,7 @@ program
   .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('namedLayout'))
   .action(async (name, options) => {
     let files
-    const root = 'src/routes'
+    const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
     const language = options.typescript ? 'ts' : options.javascript ? 'js' : config.language
@@ -66,7 +69,7 @@ program
 
     try {
       if (!fs.existsSync(root)) {
-        console.log(blue(`Cannot find ${root}. Are you in your project's root directory?`))
+        console.log(blue(`Cannot find ${root}. Does it exist?`))
         process.exit(1)
       }
     } catch (error) {
