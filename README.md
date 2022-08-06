@@ -6,7 +6,7 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 ## Features
 
-- config file, for global defaults
+- config file, for project defaults
 - runtime options
 - typescript support
 - starter code for created files
@@ -19,20 +19,30 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 You must be in your project's root directory, to use mkrt
 
-`mkrt <directory-path> <options>`
+`mkrt <path> <options>`
 
 Directories will be created, if they don't exist.
 If a directory does exist and isn't empty, you'll be prompted to continue.
 
-### Commands
+### Configuration
 
-`mkrt config <option> <value>` set default configuration options
+After installing mkrt, you'll need a `mkrt.config.json` file in your project's root directory. If you don't create one, mkrt can create it for you when you first run mkrt.
 
-Arguments for `config`. Defaults are listed first.
+```json
+// example mkrt.config.json
+{
+  "codekit": "true",
+  "language": "ts",
+  "route": "page"
+}
+```
 
-- `codekit <[ true | false ]>` adds commonly-used code to your files
-- `language <[ ts | js ]>` file extension to use
-- `route <[ page | server ]>` type of route to create
+`codekit <[ true | false ]>` adds commonly-used code to your files
+
+`language <[ ts | js ]>` file extension to use for relevant files
+
+`route <[ page | server ]>` type of route to create
+
 
 > Why 'codekit'?
 >
@@ -42,7 +52,7 @@ Arguments for `config`. Defaults are listed first.
 
 ### Options
 
-Some are overrides for the default config, others are stand-alone.
+Some are overrides for your config, others are stand-alone.
 
 - `-n, --named-layout <name>` adds `@<name>` to .svelte files (ex, +page@alternate.svelte)
 - `-c, --codekit` adds sensible starter code to files
@@ -54,10 +64,10 @@ Some are overrides for the default config, others are stand-alone.
 
 ### Examples
 
-`mkrt about`
+`mkrt .` - Adds a route to your project root, although this may be created by default when you install SvelteKit.
 
-`mkrt api/auth -sj`
+`mkrt about` - creates a /about route
 
-`mkrt company -n corp`
+`mkrt api/auth -sj` - creates a server route, with a .js file extension
 
-`mkrt config language js`
+`mkrt company -n corp` - creates a page route with a named layout; so the svelte file will be `+page@corp.svelte`
