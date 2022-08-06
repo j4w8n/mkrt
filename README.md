@@ -19,7 +19,7 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 You must be in your project's root directory, to use mkrt
 
-`mkrt <path> <options>`
+`mkrt <path> [options]`
 
 Directories will be created, if they don't exist. If any route files, that you've just asked mkrt to create, already exist in the directory then you'll be prompted to overwrite them or not.
 
