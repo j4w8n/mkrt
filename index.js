@@ -21,7 +21,7 @@ const config_file = path.join(process.cwd(), 'mkrt.config.json')
 const svelte_config_file = path.join(process.cwd(), 'svelte.config.js')
 const { default: sk_config } = await import(`${pathToFileURL(svelte_config_file).href}`)
 const route_source = sk_config.kit.files?.routes || null
-console.log(route_source)
+
 try {
   if (!fs.existsSync(config_file)) {
     let response = await prompts({
@@ -66,6 +66,7 @@ program
     const language = options.typescript ? 'ts' : options.javascript ? 'js' : config.language
     const route = options.server ? 'server' : options.page ? 'page' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
+    const template_path = config.templates ?? path.join(__dirname, 'templates')
 
     try {
       if (!fs.existsSync(root)) {
@@ -129,7 +130,7 @@ program
           template = `${template}.${language}`
         }
 
-        const src = path.join(__dirname, 'templates', template)
+        const src = path.join(template_path, template)
         const dst = path.join(dir_path, files[i])
 
         create_file(src, dst)
