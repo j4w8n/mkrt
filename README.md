@@ -21,8 +21,11 @@ You must be in your project's root directory, to use mkrt
 
 `mkrt <path> <options>`
 
-Directories will be created, if they don't exist.
-If a directory does exist and isn't empty, you'll be prompted to continue.
+Directories will be created, if they don't exist. If any route files, that you've just asked mkrt to create, already exist in the directory then you'll be prompted to overwrite them or not.
+
+By default, a typical page route will create three files => +page.svelte, +page.server.ts, +page.ts
+
+By default, a typcial server route will create one file => +server.ts
 
 ### Configuration
 
@@ -64,10 +67,10 @@ Some are overrides for your config, others are stand-alone.
 
 ### Examples
 
-`mkrt .` - Adds a route to your project root, although this may be created by default when you install SvelteKit.
+`mkrt .` - Adds a page route to your project's routes directory (src/routes by default in SvelteKit)
 
 `mkrt about` - creates a /about route
 
-`mkrt api/auth -sj` - creates a server route, with a .js file extension
+`mkrt api/auth -sj` - overrides the default config, if needed, and creates a server route with a .js file extension
 
 `mkrt company -n corp` - creates a page route with a named layout; so the svelte file will be `+page@corp.svelte`
