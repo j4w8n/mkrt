@@ -64,7 +64,7 @@ program
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
     const language = options.typescript ? 'ts' : options.javascript ? 'js' : config.language
-    const route = options.server ? 'server' : options.page ? 'page' : config.route
+    const route = options.page ? 'page' : options.server ? 'server' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
     const template_path = config.templates ?? path.join(__dirname, 'templates')
 
