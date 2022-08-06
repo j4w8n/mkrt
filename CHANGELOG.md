@@ -7,15 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing to see here
+
+## [0.2.0] - 2022-08-05
+
 ### Added
 
-- using -s and -n throws error
+- using -s and -n together throws error
 
 ### Changed
 
+- uses project config file `mkrt.config.json` instead of global `config.json`
 - renames @sveltejs/kit/data to @sveltejs/kit
 - check if route files exist in directory, instead of checking if directory has any type of file
 - clarifies some code verbiage
+
+### Removes
+
+- mkrt `config` command
 
 ## [0.1.2] - 2022-08-02
 
@@ -43,7 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Well, everything!
 
-[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.1.2...HEAD
+[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/j4w8n/mkrt/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/j4w8n/mkrt/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/j4w8n/mkrt/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/j4w8n/mkrt/releases/tag/v0.1.0
