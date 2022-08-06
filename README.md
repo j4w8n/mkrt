@@ -6,30 +6,28 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 ## Features
 
-- config file, for project defaults
+- configuration file
 - runtime options
 - typescript support
-- starter code for created files
+- default & custom template routing files
 
 ## Installation
 
 `[p]npm add -g mkrt` or `yarn global add mkrt`
 
-## Usage
-
-You must be in your project's root directory, to use mkrt
-
-`mkrt <path> [options]`
-
-Directories will be created, if they don't exist. If any route files, that you've just asked mkrt to create, already exist in the directory then you'll be prompted whether you want to overwrite them or not.
-
-By default, a typical page route will create three files => +page.svelte, +page.server.ts, +page.ts
-
-By default, a typcial server route will create one file => +server.ts
-
 ### Configuration
 
-After installing mkrt, you'll need a `mkrt.config.json` file in your project's root directory. If you don't create one, mkrt can create it for you when you first run mkrt.
+You'll likely want a `mkrt.config.json` file in your project's root directory, to provide default options when creating new routes. If you don't create a file, mkrt will offer to do this for you.
+
+`codekit`, `language`, and `route` are all required to successfully create routes - whether that's via the config file or cli options.
+
+`"codekit": "[ true | false ]"` adds commonly-used code to your files, whether it's from mkrt's default templates or your own.
+
+`"language": "[ ts | js ]"` file extension to use for relevant route files
+
+`"route": [ page | server ]"` type of route to create
+
+`"templates": "<path>"` absolute or relative path to your custom codekit template files
 
 ```json
 // example mkrt.config.json
@@ -41,21 +39,23 @@ After installing mkrt, you'll need a `mkrt.config.json` file in your project's r
 }
 ```
 
-Configuration Options:
-
-`"codekit": "[ true | false ]"` adds commonly-used code to your files
-
-`"language": "[ ts | js ]"` file extension to use for relevant files
-
-`"route": [ page | server ]"` type of route to create
-
-`"templates": ""` absolute or relative path to your custom codekit template files
-
 > Why 'codekit'?
 >
 > 'boilerplate' is a more understood term, but seems to give-off a negative vibe for devs these days
 >
-> Think of codekit like a first-aid kit, which has things you'd typically need for an everyday injury. A codekit's aim is to have code which most people are going to need, most of the time.
+> A codekit's goal is to provide code which most people are going to need, most of the time.
+
+## Usage
+
+When using mkrt, you'll want to be in your project's root directory.
+
+`mkrt <path> [options]`
+
+Directories will be created, if they don't exist. If any of the to-be-created route files already exist in the directory, then you'll be prompted whether you want to overwrite them or not.
+
+By default, a typical page route will create three files => +page.svelte, +page.server.ts, +page.ts
+
+By default, a typcial server route will create one file => +server.ts
 
 ### Options
 
