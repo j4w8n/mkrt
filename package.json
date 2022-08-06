@@ -1,6 +1,6 @@
 {
   "name": "mkrt",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Create SvelteKit routes, fast",
   "bin": {
     "mkrt": "index.js"
