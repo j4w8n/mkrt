@@ -17,9 +17,9 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 ### Configuration
 
-You'll likely want a `mkrt.config.json` file in your project's root directory, to provide default options when creating new routes. If you don't create a file, mkrt will offer to do this for you.
+You'll need a `mkrt.config.json` file in your project's root directory, to provide default options when creating new routes. If you don't create a file, mkrt will offer to do this for you.
 
-`codekit`, `language`, and `route` are all required to successfully create routes - whether that's via the config file or cli options.
+`language`, and `route` are the only required options in order to create routes; however, mkrt will set codekit to true if it creates the file.
 
 `"codekit": "[ true | false ]"` adds commonly-used code to your files, whether it's from mkrt's default templates or your own.
 
@@ -41,7 +41,7 @@ You'll likely want a `mkrt.config.json` file in your project's root directory, t
 
 > Why 'codekit'?
 >
-> 'boilerplate' is a more understood term, but seems to give-off a negative vibe for devs these days
+> 'boilerplate' is a more understood term, but seems to give-off a negative vibe for devs these days; so I thought I'd come up with something else.
 >
 > A codekit's goal is to provide code which most people are going to need, most of the time.
 
@@ -53,13 +53,15 @@ When using mkrt, you'll want to be in your project's root directory.
 
 Directories will be created, if they don't exist. If any of the to-be-created route files already exist in the directory, then you'll be prompted whether you want to overwrite them or not.
 
-By default, a typical page route will create three files => +page.svelte, +page.server.ts, +page.ts
+With default mkrt.config.json options:
 
-By default, a typcial server route will create one file => +server.ts
+- a page route will create three files => +page.svelte, +page.server.ts, +page.ts. You may not need all of these files for each of your routes, but we create all three and let you decide which to delete.
 
-### Options
+- a server route will create one file => +server.ts
 
-Some are overrides for your config, others are stand-alone.
+### CLI Options
+
+Most are overrides for your default config. `--named-layout` is stand-alone, and the only way to tell mkrt that a page route uses a named layout.
 
 - `-n, --named-layout <name>` adds `@<name>` to .svelte files (ex, +page@alternate.svelte)
 - `-c, --codekit` adds sensible starter code to files
@@ -75,6 +77,6 @@ Some are overrides for your config, others are stand-alone.
 
 `mkrt about` - creates a /about route
 
-`mkrt api/auth -sj` - overrides the default config, if needed, and creates a server route with a .js file extension
+`mkrt api/auth -sj` - creates an api/auth server route with a .js file extension; overriding the default config - assuming it's set for `page` and `ts` respectively
 
 `mkrt company -n corp` - creates a page route with a named layout; so the svelte file will be `+page@corp.svelte`
