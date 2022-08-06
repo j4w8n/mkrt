@@ -36,16 +36,20 @@ After installing mkrt, you'll need a `mkrt.config.json` file in your project's r
 {
   "codekit": "true",
   "language": "ts",
-  "route": "page"
+  "route": "page",
+  "templates": "/path/to/custom/codekit/files"
 }
 ```
 
-`codekit <[ true | false ]>` adds commonly-used code to your files
+Configuration Options:
 
-`language <[ ts | js ]>` file extension to use for relevant files
+`"codekit": "[ true | false ]"` adds commonly-used code to your files
 
-`route <[ page | server ]>` type of route to create
+`"language": "[ ts | js ]"` file extension to use for relevant files
 
+`"route": [ page | server ]"` type of route to create
+
+`"templates": ""` absolute or relative path to your custom codekit template files
 
 > Why 'codekit'?
 >
