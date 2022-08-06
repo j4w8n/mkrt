@@ -3,25 +3,44 @@ import prompts from 'prompts'
 import { Command, Option, Argument } from 'commander'
 import fs from 'fs'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import { fileURLToPath, pathToFileURL } from 'url'
 import { blue, green, red } from 'kleur/colors'
 import packageJson from './package.json' assert { type: "json" }
-import config from './config.json' assert { type: "json" }
+
+const create_file = (src, dest) => {
+  try {
+    fs.copyFileSync(src, dest)
+  } catch (error) {
+    console.log(red(error))
+  }
+}
 
 const program = new Command()
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const config_file = path.join(process.cwd(), 'mkrt.config.json')
 
-program
-  .command('config')
-  .description('Set default configuration options')
-  .addArgument(new Argument('<option>').choices(['codekit', 'language', 'route']))
-  .argument('<value>')
-  .action((option, value) => {
-    config[option] = value
-    fs.writeFileSync('./config.json', JSON.stringify(config), 'utf8')
-    console.log(blue('Configuration changed!'), config)
-    process.exit(1)
-  })
+try {
+  if (!fs.existsSync(config_file)) {
+    let response = await prompts({
+      type: 'confirm',
+      name: 'value',
+      message: `Config file missing! Create now?`,
+      initial: false
+    })
+  
+    if (!response.value) {
+      process.exit(1);
+    }
+  
+    create_file(path.join(__dirname, 'mkrt.config.json'), config_file) 
+  }
+} catch (error) {
+  console.log(red(error))
+}
+
+const { default: config } = await import(`${pathToFileURL(config_file).href}`, {
+  assert: { type: "json" }
+})
 
 program
   .name('mkrt')
@@ -44,14 +63,6 @@ program
     const language = options.typescript ? 'ts' : options.javascript ? 'js' : config.language
     const route = options.server ? 'server' : options.page ? 'page' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
-
-    const create_file = (src, dest) => {
-      try {
-        fs.copyFileSync(src, dest)
-      } catch (error) {
-        console.log(red(error))
-      }
-    }
 
     try {
       if (!fs.existsSync(root)) {
@@ -85,7 +96,11 @@ program
       }
     }
 
-    fs.mkdirSync(dir_path, { recursive: true })
+    try {
+      fs.mkdirSync(dir_path, { recursive: true })
+    } catch (error) {
+      console.log(red(error))
+    }
 
     if (!codekit) {
       // create files with no content
