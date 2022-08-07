@@ -47,8 +47,9 @@ program
   .description('Create SvelteKit routes, fast')
   .version(packageJson.version)
   .option('-n, --named-layout <layout-name>', 'use this named layout for the route')
-  .addOption(new Option('-p, --page', 'route is a +page.svelte file'))
-  .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('namedLayout'))
+  .option('-p, --page', 'route is a +page.svelte file')
+  .addOption(new Option('-l, --layout', 'route is a +layout.svelte file').conflicts('namedLayout'))
+  .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
   .addOption(new Option('--load', 'creates a +page.[ts|js] file').conflicts('server'))
   .addOption(new Option('--data', 'creates a +page.server.[ts|js] file').conflicts('server'))
   .action(async (name, options) => {
@@ -57,11 +58,25 @@ program
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
-    const route = options.page ? 'page' : options.server ? 'server' : config?.route ?? 'page'
+    const route = options.page ? 'page' : options.server ? 'server' : options.layout ? 'layout' : config?.route ?? 'page'
     const codekit = config?.codekit ?? true
     const template_path = config?.templates ?? path.join(__dirname, 'templates')
     const load = options.load
     const data = options.data
+
+    if (typeof config?.templates !== 'string') {
+      console.log(red(`Templates configuration is not valid. Expecting string, got ${typeof config?.templates} Exiting...`))
+      process.exit(1)
+    }
+    if (config?.route !== 'page' && config?.route !== 'server') {
+      console.log(red('Route configuration is not valid. Exiting...'))
+      process.exit(1)
+    }
+
+    if (config?.codekit !== 'true' && config?.codekit !== 'false') {
+      console.log(red('Codekit configuration is not valid. Exiting...'))
+      process.exit(1)
+    }
 
     try {
       language = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? 'ts' : 'js'
@@ -78,11 +93,6 @@ program
       } catch (error) {
         console.log(red(error))
       }
-    }
-
-    if (route !== 'page' && route !== 'server') {
-      console.log(red('Route configuration is not valid. Exiting...'))
-      process.exit(1)
     }
 
     try {
@@ -102,6 +112,11 @@ program
         files = [`+page${named_layout}.svelte`]
         if (load) files.push(`+page.${language}`)
         if (data) files.push(`+page.server.${language}`)
+        break;
+      case 'layout':
+        files = [`+layout.svelte`]
+        if (load) files.push(`+layout.${language}`)
+        if (data) files.push(`+layout.server.${language}`)
         break;
     } 
 
@@ -145,7 +160,7 @@ program
           template = `${parts[0]}.${suffix.slice(1).join('.')}`
         }
         if (files[i].split('.')[1] === 'svelte') {
-          // add .js or .ts to end of +page.svelte file, for template filename copy
+          // add .js or .ts to end of +page.svelte or +layout.svelte file, for template filename copy
           template = `${template}.${language}`
         }
 
