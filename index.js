@@ -81,18 +81,26 @@ program
     const codekit = options.codekit ?? config.codekit == "true"
     const template_path = config.templates ?? path.join(__dirname, 'templates')
 
+    try {
+      if (!fs.existsSync(template_path)) {
+        console.log(blue(`Cannot find ${template_path}. Exiting...`))
+        process.exit(1)
+      }
+    } catch (error) {
+      console.log(red(error))
+    }
     if (route !== 'page' && route !== 'server') {
-      console.log(red('route configuration is not valid.'))
+      console.log(red('Route configuration is not valid. Exiting...'))
       process.exit(1)
     }
     if (language !== 'ts' && language !== 'js') {
-      console.log(red('language configuration is not valid.'))
+      console.log(red('Language configuration is not valid. Exiting...'))
       process.exit(1)
     }
 
     try {
       if (!fs.existsSync(root)) {
-        console.log(blue(`Cannot find ${root}. Does it exist?`))
+        console.log(blue(`Cannot find ${root}. Exiting...`))
         process.exit(1)
       }
     } catch (error) {
