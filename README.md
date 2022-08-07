@@ -27,7 +27,7 @@ You'll need a `mkrt.config.json` file in your project's root directory, to provi
 
 `"route": [ page | server ]"` type of route to create
 
-`"templates": "<path>"` absolute or relative path to your custom codekit template files
+`"templates": "<path>"` absolute or relative path to your custom codekit template files. This option requires `"codekit": "true"`.
 
 ```json
 // example mkrt.config.json
