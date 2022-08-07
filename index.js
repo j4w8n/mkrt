@@ -22,40 +22,22 @@ const svelte_config_file = path.join(process.cwd(), 'svelte.config.js')
 const { default: sk_config } = await import(`${pathToFileURL(svelte_config_file).href}`)
 const route_source = sk_config.kit.files?.routes || null
 
-try {
-  if (!fs.existsSync(config_file)) {
-    let response = await prompts({
-      type: 'confirm',
-      name: 'value',
-      message: `Config file missing! Create now?`,
-      initial: false
-    })
-  
-    if (!response.value) {
-      console.log(blue('A mkrt.config.json file is required, in your project\'s root directory. See the project readme at https://www.github.com/j4w8n/mkrt#readme'))
-      process.exit(1);
+if (fs.existsSync(config_file)) {
+  fs.stat(config_file, (err, stats) => {
+    if (stats.size === 0) {
+      console.log(red('Config file is empty.'))
+      process.exit(1)
     }
+  })
   
-    create_file(path.join(__dirname, 'mkrt.config.json'), config_file) 
-  }
-} catch (error) {
-  console.log(red(error))
-}
-
-fs.stat(config_file, (err, stats) => {
-  if (stats.size === 0) {
+  var { default: config } = await import(`${pathToFileURL(config_file).href}`, {
+    assert: { type: "json" }
+  })
+  
+  if (Object.entries(config).length === 0) {
     console.log(red('Config file is empty.'))
     process.exit(1)
   }
-})
-
-const { default: config } = await import(`${pathToFileURL(config_file).href}`, {
-  assert: { type: "json" }
-})
-
-if (Object.entries(config).length === 0) {
-  console.log(red('Config file is empty.'))
-  process.exit(1)
 }
 
 program
@@ -72,9 +54,9 @@ program
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
-    const route = options.page ? 'page' : options.server ? 'server' : config.route
-    const codekit = config.codekit
-    const template_path = config.templates ?? path.join(__dirname, 'templates')
+    const route = options.page ? 'page' : options.server ? 'server' : config?.route ?? 'page'
+    const codekit = config?.codekit ?? true
+    const template_path = config?.templates ?? path.join(__dirname, 'templates')
 
     try {
       language = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? 'ts' : 'js'
