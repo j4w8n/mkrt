@@ -32,7 +32,7 @@ try {
     })
   
     if (!response.value) {
-      console.log(blue('A mkrt.config.json file is required, in your project\'s root directory. Options \'language\' and \'route\' are required to create a route.'))
+      console.log(blue('A mkrt.config.json file is required, in your project\'s root directory. See the project readme at https://www.github.com/j4w8n/mkrt#readme'))
       process.exit(1);
     }
   
@@ -65,21 +65,22 @@ program
   .description('Create SvelteKit routes, fast')
   .version(packageJson.version)
   .option('-n, --named-layout <layout-name>', 'use this named layout for the route')
-  .option('-c, --codekit', 'add sensible starter code into files')
-  .option('--no-codekit', 'do not use codekits in files')
-  .option('-t, --typescript', 'use .ts files')
-  .addOption(new Option('-j, --javascript', 'use .js files').conflicts('typescript'))
   .addOption(new Option('-p, --page', 'route is a +page.svelte file'))
   .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('namedLayout'))
   .action(async (name, options) => {
-    let files
+    let files, language
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
-    const language = options.typescript ? 'ts' : options.javascript ? 'js' : config.language
     const route = options.page ? 'page' : options.server ? 'server' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
     const template_path = config.templates ?? path.join(__dirname, 'templates')
+
+    try {
+      language = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? 'ts' : 'js'
+    } catch (error) {
+      console.log(red(error))
+    }
 
     try {
       if (!fs.existsSync(template_path)) {
@@ -91,10 +92,6 @@ program
     }
     if (route !== 'page' && route !== 'server') {
       console.log(red('Route configuration is not valid. Exiting...'))
-      process.exit(1)
-    }
-    if (language !== 'ts' && language !== 'js') {
-      console.log(red('Language configuration is not valid. Exiting...'))
       process.exit(1)
     }
 
