@@ -73,7 +73,7 @@ program
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
     const route = options.page ? 'page' : options.server ? 'server' : config.route
-    const codekit = options.codekit ?? config.codekit == "true"
+    const codekit = config.codekit
     const template_path = config.templates ?? path.join(__dirname, 'templates')
 
     try {
