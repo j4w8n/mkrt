@@ -64,18 +64,23 @@ program
     const load = options.load
     const data = options.data
 
-    if (typeof config?.templates !== 'string') {
-      console.log(red(`Templates configuration is not valid. Expecting string, got ${typeof config?.templates} Exiting...`))
-      process.exit(1)
+    if (config?.templates) {
+      if (typeof config?.templates !== 'string') {
+        console.log(red(`Templates configuration is not valid. Expecting string, got ${typeof config?.templates} Exiting...`))
+        process.exit(1)
+      }
     }
-    if (config?.route !== 'page' && config?.route !== 'server') {
-      console.log(red('Route configuration is not valid. Exiting...'))
-      process.exit(1)
+    if (config?.route) {
+      if (config?.route !== 'page' && config?.route !== 'server') {
+        console.log(red('Route configuration is not valid. Exiting...'))
+        process.exit(1)
+      }
     }
-
-    if (config?.codekit !== 'true' && config?.codekit !== 'false') {
-      console.log(red('Codekit configuration is not valid. Exiting...'))
-      process.exit(1)
+    if (config?.codekit) {
+      if (config?.codekit !== 'true' && config?.codekit !== 'false') {
+        console.log(red('Codekit configuration is not valid. Exiting...'))
+        process.exit(1)
+      }
     }
 
     try {
