@@ -49,14 +49,19 @@ program
   .option('-n, --named-layout <layout-name>', 'use this named layout for the route')
   .addOption(new Option('-p, --page', 'route is a +page.svelte file'))
   .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('namedLayout'))
+  .addOption(new Option('--load', 'creates a +page.[ts|js] file').conflicts('server'))
+  .addOption(new Option('--data', 'creates a +page.server.[ts|js] file').conflicts('server'))
   .action(async (name, options) => {
     let files, language
+
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
     const route = options.page ? 'page' : options.server ? 'server' : config?.route ?? 'page'
     const codekit = config?.codekit ?? true
     const template_path = config?.templates ?? path.join(__dirname, 'templates')
+    const load = options.load
+    const data = options.data
 
     try {
       language = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? 'ts' : 'js'
@@ -64,14 +69,17 @@ program
       console.log(red(error))
     }
 
-    try {
-      if (!fs.existsSync(template_path)) {
-        console.log(blue(`Cannot find ${template_path}. Exiting...`))
-        process.exit(1)
+    if (codekit) {
+      try {
+        if (!fs.existsSync(template_path)) {
+          console.log(blue(`Cannot find ${template_path}. Exiting...`))
+          process.exit(1)
+        }
+      } catch (error) {
+        console.log(red(error))
       }
-    } catch (error) {
-      console.log(red(error))
     }
+
     if (route !== 'page' && route !== 'server') {
       console.log(red('Route configuration is not valid. Exiting...'))
       process.exit(1)
@@ -91,7 +99,9 @@ program
         files = [`+server.${language}`]
         break;
       case 'page':
-        files = [`+page${named_layout}.svelte`, `+page.server.${language}`, `+page.${language}`]
+        files = [`+page${named_layout}.svelte`]
+        if (load) files.push(`+page.${language}`)
+        if (data) files.push(`+page.server.${language}`)
         break;
     } 
 
