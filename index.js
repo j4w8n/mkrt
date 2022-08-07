@@ -32,6 +32,7 @@ try {
     })
   
     if (!response.value) {
+      console.log(blue('A mkrt.config.json file is required, in your project\'s root directory. Options \'language\' and \'route\' are required to create a route.'))
       process.exit(1);
     }
   
@@ -41,9 +42,21 @@ try {
   console.log(red(error))
 }
 
+fs.stat(config_file, (err, stats) => {
+  if (stats.size === 0) {
+    console.log(red('Config file is empty.'))
+    process.exit(1)
+  }
+})
+
 const { default: config } = await import(`${pathToFileURL(config_file).href}`, {
   assert: { type: "json" }
 })
+
+if (Object.entries(config).length === 0) {
+  console.log(red('Config file is empty.'))
+  process.exit(1)
+}
 
 program
   .name('mkrt')
@@ -67,6 +80,15 @@ program
     const route = options.page ? 'page' : options.server ? 'server' : config.route
     const codekit = options.codekit ?? config.codekit == "true"
     const template_path = config.templates ?? path.join(__dirname, 'templates')
+
+    if (route !== 'page' && route !== 'server') {
+      console.log(red('route configuration is not valid.'))
+      process.exit(1)
+    }
+    if (language !== 'ts' && language !== 'js') {
+      console.log(red('language configuration is not valid.'))
+      process.exit(1)
+    }
 
     try {
       if (!fs.existsSync(root)) {
