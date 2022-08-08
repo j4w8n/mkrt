@@ -4,7 +4,7 @@ import { Command, Option, Argument } from 'commander'
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath, pathToFileURL } from 'url'
-import { blue, green, red } from 'kleur/colors'
+import { blue, green, red, yellow } from 'kleur/colors'
 import packageJson from './package.json' assert { type: "json" }
 
 const create_file = (src, dest) => {
@@ -93,7 +93,7 @@ program
     if (codekit) {
       try {
         if (!fs.existsSync(template_path)) {
-          console.log(blue(`Cannot find ${template_path}. Exiting...`))
+          console.log(red(`Cannot find ${template_path} directory. Exiting...`))
           process.exit(1)
         }
       } catch (error) {
@@ -103,7 +103,7 @@ program
 
     try {
       if (!fs.existsSync(root)) {
-        console.log(blue(`Cannot find ${root}. Exiting...`))
+        console.log(red(`Cannot find ${root}. Exiting...`))
         process.exit(1)
       }
     } catch (error) {
@@ -179,7 +179,11 @@ program
         const src = path.join(template_path, template)
         const dst = path.join(dir_path, files[i])
 
-        create_file(src, dst)
+        if (fs.existsSync(src)) {
+          create_file(src, dst)
+        } else {
+          console.log(yellow(`Template file ${blue(src)} does not exist. Skipping...`))
+        }
       }
     }
     console.log(green('Done!'))
