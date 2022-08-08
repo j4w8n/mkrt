@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-Nothing to see here
+### Added
+
+- checks that the template file exists, otherwise skips
 
 ## [0.4.0] - 2022-08-07
 
