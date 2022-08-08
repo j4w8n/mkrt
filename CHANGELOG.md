@@ -7,14 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Nothing to see here
+
+## [0.4.0] - 2022-08-07
+
 ### Added
 
 - checks that the template file path exists
 - autodetection for typescript
+- support for layout files
 
 ### Removed
 
-- language option in configuration file
+- requirement for a configuration file. defaults are `codekit: 'true'` and `route: 'page'`
+- language option in configuration file (now autodetected)
 - javascript, typescript, codekit, no-codekit cli options
 
 ## [0.3.0] - 2022-08-06
@@ -68,7 +74,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Well, everything!
 
-[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/j4w8n/mkrt/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/j4w8n/mkrt/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/j4w8n/mkrt/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/j4w8n/mkrt/compare/v0.1.1...v0.1.2
