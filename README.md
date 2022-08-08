@@ -38,7 +38,7 @@ When using mkrt, you'll want to be in your project's root directory.
 
 Directories will be created, if they don't exist. If any of the to-be-created route files already exist in the directory, then you'll be prompted whether you want to overwrite them or not.
 
-The following route files will be created by default. Use a mkrt.config.json file to have additional page route files created.
+The following route files will be created by default. Use cli options to have additional page route and layout files created.
 
 - page routes => +page.svelte
 - layout routes => +layout.svelte
@@ -54,7 +54,7 @@ The following route files will be created by default. Use a mkrt.config.json fil
 
 Options `--load` and `--data` have no effect if a server route is being created.
 
-> For more information about using -n with layout files, checkout [Named Layouts(https://kit.svelte.dev/docs/layouts#named-layouts) in the docs.
+> For more information about using -n with layout files, checkout [Named Layouts](https://kit.svelte.dev/docs/layouts#named-layouts) in the docs.
 
 #### Overrides for default config
 
