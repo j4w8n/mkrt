@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - checks that the template file exists, otherwise skips
 
+### Changed
+
+- types for Load => PageLoad and LayoutLoad, respectively
+
 ## [0.4.0] - 2022-08-07
 
 ### Added
