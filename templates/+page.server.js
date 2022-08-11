@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit'
-/** @type {import('./$types').GET} */
+/** @type {import('./$types').Get} */
 
 export const GET = () => {
 
