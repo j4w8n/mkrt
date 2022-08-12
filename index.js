@@ -52,18 +52,19 @@ program
   .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
   .addOption(new Option('--load', 'creates a +page.[ts|js] file').conflicts('server'))
   .addOption(new Option('--data', 'creates a +page.server.[ts|js] file').conflicts('server'))
+  .addOption(new Option('--all', 'creates all three route files for page or layout routes').conflicts('load').conflicts('data'))
   .action(async (name, options) => {
     let files, language
-
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
-    const layout_name = options.layout ? `-${options.layout}` : ''
+    const layout_name = typeof options.layout !== 'boolean' ? `-${options.layout}` : ''
     const route = options.page ? 'page' : options.server ? 'server' : options.layout ? 'layout' : config?.route ?? 'page'
     const codekit = config?.codekit ?? true
     const template_path = config?.templates ?? path.join(__dirname, 'templates')
     const load = options.load
     const data = options.data
+    const all = options.all
 
     if (config?.templates) {
       if (typeof config?.templates !== 'string') {
@@ -116,13 +117,23 @@ program
         break;
       case 'page':
         files = [`+page${named_layout}.svelte`]
-        if (load) files.push(`+page.${language}`)
-        if (data) files.push(`+page.server.${language}`)
+        if (all) {
+          files.push(`+page.${language}`)
+          files.push(`+page.server.${language}`)
+        } else {
+          if (load) files.push(`+page.${language}`)
+          if (data) files.push(`+page.server.${language}`)
+        }
         break;
       case 'layout':
         files = [`+layout${layout_name}${named_layout}.svelte`]
-        if (load) files.push(`+layout.${language}`)
-        if (data) files.push(`+layout.server.${language}`)
+        if (all) {
+          files.push(`+layout.${language}`)
+          files.push(`+layout.server.${language}`)
+        } else {
+          if (load) files.push(`+layout.${language}`)
+          if (data) files.push(`+layout.server.${language}`)
+        }
         break;
     } 
 
