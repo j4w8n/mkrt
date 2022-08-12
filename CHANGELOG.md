@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- checks that the template file exists, otherwise skips
+- checks that a requested template file exists, otherwise skips
+- option --all, to create all three route files; instead of needing to provide both --data and --load in this case
 
 ### Changed
 
@@ -22,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - checks that the template file path exists
 - autodetection for typescript
 - support for layout files
+- creating a page route results in only +page.svelte being created, instead of all three files
+- option --data, to create a page or layout endpoint file (ex, +page.ts)
+- option --load, to create a page or layout .server file (ex, +layout.server.ts)
 
 ### Removed
 
