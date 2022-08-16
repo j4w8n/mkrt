@@ -50,9 +50,10 @@ The following route files will be created by default. Use cli options to have ad
 
 - `-n, --named-layout <name>` Create a page route, or layout, that references a named layout. Ex, +page@alternate.svelte or +layout@default.svelte
 - `--load` Create a +[page|layout].[ts|js] file with the route.
-- `--data` Create a +[page|layout].server.[ts|js] file with the route.
+- `--sload` Create a +[page|layout].server.[ts|js] file with the route.
+- `--all` Convenience method for using `--load` and `--data` at the same time.
 
-Options `--load` and `--data` have no effect if a server route is being created.
+Options `--load`, `--sload`, `--all` have no effect if a server route is being created.
 
 > For more information about using -n with layout files, checkout [Named Layouts](https://kit.svelte.dev/docs/layouts#named-layouts) in the docs.
 
@@ -70,7 +71,7 @@ Options `--load` and `--data` have no effect if a server route is being created.
 
 `mkrt about --load` - creates an /about page route, with a `+page.[ts|js]` file.
 
-`mkrt about -l --data` - creates a layout in /about, with a `+layout.server.[ts|js]` file.
+`mkrt about -l --sload` - creates a layout in /about, with a `+layout.server.[ts|js]` file.
 
 `mkrt about -l hello` - creates a named layout in /about.
 
