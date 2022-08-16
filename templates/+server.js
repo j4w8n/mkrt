@@ -1,9 +1,9 @@
 /** @type {import('./$types').RequestHandler} */
 
-export const GET = () => {
+export function GET() {
 
 
   return new Response(
-    
+
   )
 }

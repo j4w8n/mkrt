@@ -1,6 +1,6 @@
 /** @type {import('./$types').PageLoad} */
 
-export const load = () => {
+export function load() {
 
 
   return {

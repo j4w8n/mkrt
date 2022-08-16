@@ -1,6 +1,6 @@
 /** @type {import('./$types').LayoutLoad} */
 
-export const load = () => {
+export function load() {
 
 
   return {
