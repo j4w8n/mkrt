@@ -51,8 +51,8 @@ program
   .option('-l, --layout [name]', 'route is a +layout.svelte file, with optional named assignment')
   .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
   .addOption(new Option('--load', 'creates a +page.[ts|js] file').conflicts('server'))
-  .addOption(new Option('--data', 'creates a +page.server.[ts|js] file').conflicts('server'))
-  .addOption(new Option('--all', 'creates all three route files for page or layout routes').conflicts('load').conflicts('data'))
+  .addOption(new Option('--sload', 'creates a +page.server.[ts|js] file').conflicts('server'))
+  .addOption(new Option('--all', 'creates all three route files for page or layout routes').conflicts('load').conflicts('sload').conflicts('server'))
   .action(async (name, options) => {
     let files, language
     const root = route_source ?? 'src/routes'
@@ -63,7 +63,7 @@ program
     const codekit = config?.codekit ?? true
     const template_path = config?.templates ?? path.join(__dirname, 'templates')
     const load = options.load
-    const data = options.data
+    const sload = options.sload
     const all = options.all
 
     if (config?.templates) {
@@ -122,7 +122,7 @@ program
           files.push(`+page.server.${language}`)
         } else {
           if (load) files.push(`+page.${language}`)
-          if (data) files.push(`+page.server.${language}`)
+          if (sload) files.push(`+page.server.${language}`)
         }
         break;
       case 'layout':
@@ -132,7 +132,7 @@ program
           files.push(`+layout.server.${language}`)
         } else {
           if (load) files.push(`+layout.${language}`)
-          if (data) files.push(`+layout.server.${language}`)
+          if (sload) files.push(`+layout.server.${language}`)
         }
         break;
     } 
