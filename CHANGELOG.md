@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing to see here
 
+## [0.5.1] - 2022-08-16
+
+### Changed
+
+- option `--data` to `--sload`, to better align with the core function of `+page.server.[js|ts]`
+- template functions are declared in ES5 syntax
+
 ## [0.5.0] - 2022-08-16
 
 ### Added
