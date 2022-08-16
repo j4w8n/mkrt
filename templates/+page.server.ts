@@ -1,7 +1,6 @@
-import { error, redirect } from '@sveltejs/kit'
-import type { GET } from './$types'
+import type { PageServerLoad } from './$types'
 
-export const GET: GET = () => {
+export const load: PageServerLoad = () => {
 
 
   return {

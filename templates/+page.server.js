@@ -1,7 +1,6 @@
-import { error, redirect } from '@sveltejs/kit'
-/** @type {import('./$types').Get} */
+/** @type {import('./$types').PageServerLoad} */
 
-export const GET = () => {
+export const load = () => {
 
 
   return {

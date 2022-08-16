@@ -4,13 +4,6 @@ export const GET: RequestHandler = () => {
 
 
   return new Response(
-    JSON.stringify({
 
-    }),
-    {
-      headers: {
-
-      }
-    }
   )
 }
