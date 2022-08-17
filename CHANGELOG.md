@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Nothing to see here
 
+## [0.5.2] - 2022-08-17
+
+### Changed
+
+- ES5 functions back to ES6, because the syntax is easier with Typescript
+
 ## [0.5.1] - 2022-08-16
 
 ### Changed
@@ -99,7 +105,8 @@ Nothing to see here
 
 Well, everything!
 
-[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.5.1...HEAD
+[unreleased]: https://github.com/j4w8n/mkrt/compare/v0.5.2...HEAD
+[0.5.2]: https://github.com/j4w8n/mkrt/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/j4w8n/mkrt/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/j4w8n/mkrt/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/j4w8n/mkrt/compare/v0.3.0...v0.4.0
