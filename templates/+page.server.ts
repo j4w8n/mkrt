@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types'
 
-export function load(): PageServerLoad {
+export const load: PageServerLoad = () => {
 
 
   return {

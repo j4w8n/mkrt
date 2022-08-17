@@ -1,6 +1,6 @@
 import type { LayoutLoad } from './$types'
 
-export function load(): LayoutLoad {
+export const load: LayoutLoad () => {
 
 
   return {

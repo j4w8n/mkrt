@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types'
 
-export function GET(): RequestHandler {
+export const GET: RequestHandler = () => {
 
 
   return new Response(

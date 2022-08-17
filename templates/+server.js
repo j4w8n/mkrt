@@ -1,6 +1,6 @@
 /** @type {import('./$types').RequestHandler} */
 
-export function GET() {
+export const GET = () => {
 
 
   return new Response(

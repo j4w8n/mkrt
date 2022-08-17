@@ -3,3 +3,5 @@
   
   export let data
 </script>
+
+<slot></slot>
