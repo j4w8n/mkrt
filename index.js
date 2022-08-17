@@ -59,7 +59,6 @@ program
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
     const layout_name = typeof options.layout !== 'boolean' ? `-${options.layout}` : ''
-    //const route = options.page ? 'page' : options.server ? 'server' : options.layout ? 'layout' : config?.route ?? 'page'
     const cli_option = ['page','server','layout'].find((key) => options[key])
     const route = cli_option ?? config?.route ?? 'page'
     const codekit = config?.codekit ?? true
