@@ -2,7 +2,7 @@
 
 Create SvelteKit routes, fast
 
-SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.dev/docs/routing) and [migration guide](https://github.com/sveltejs/kit/discussions/5774). Backstory is on the [repo discussion](https://github.com/sveltejs/kit/discussions/5748)
+See the [routing docs](https://kit.svelte.dev/docs/routing) and [migration guide](https://github.com/sveltejs/kit/discussions/5774). Backstory is on the [repo discussion](https://github.com/sveltejs/kit/discussions/5748)
 
 ## Features
 
@@ -16,11 +16,13 @@ SvelteKit uses folder-based routes. See the [routing docs](https://kit.svelte.de
 
 `[p]npm add -g mkrt` or `yarn global add mkrt`
 
-### Configuration
+### Configuration File
+
+An optional `mkrt.config.json` config file can be created, to set your project's defaults. Place this file in the root of your project folder. Defaults can be overridden with [CLI Options](#cli-options)
 
 `"codekit": "[ true | false ]"` adds commonly-used code to your files, whether it's from mkrt's default templates or your own. Default is `true`.
 
-`"route": [ page | server ]"` type of route to create. Default is `page`. If 'page', then only the +page.svelte file is created.
+`"route": [ page | server ]"` type of route to create. Default is `page`.
 
 `"templates": "<path>"` absolute or relative path to your custom codekit template files. This option requires `"codekit": "true"` - which is the default, so there's no need to explicitly configure codekit to be true.
 
@@ -38,7 +40,9 @@ When using mkrt, you'll want to be in your project's root directory.
 
 Directories will be created, if they don't exist. If any of the to-be-created route files already exist in the directory, then you'll be prompted whether you want to overwrite them or not.
 
-The following route files will be created by default. Use cli options to have additional page route and layout files created.
+> Use `.` to create a route in your project route's directory ('src/routes' by default in SvelteKit)
+
+Depending on which type of route you create, these files are created by default.
 
 - page routes => +page.svelte
 - layout routes => +layout.svelte
@@ -48,7 +52,7 @@ The following route files will be created by default. Use cli options to have ad
 
 #### Standalone
 
-- `-n, --named-layout <name>` Create a page route, or layout, that references a named layout. Ex, +page@alternate.svelte or +layout@default.svelte
+- `-n, --named-layout <name>` Create a page route, or layout, that references a named layout. Ex, +page@alternate.svelte or +layout@root.svelte
 - `--load` Create a +[page|layout].[ts|js] file with the route.
 - `--sload` Create a +[page|layout].server.[ts|js] file with the route.
 - `--all` Convenience method for using `--load` and `--sload` at the same time.
@@ -57,7 +61,7 @@ Options `--load`, `--sload`, `--all` have no effect if a server route is being c
 
 > For more information about using -n with layout files, checkout [Named Layouts](https://kit.svelte.dev/docs/layouts#named-layouts) in the docs.
 
-#### Overrides for default config
+#### Overrides for defaults and config file
 
 - `-p, --page` route is a +page.svelte file
 - `-s, --server` route is a +server.[ts|js] file
@@ -65,19 +69,21 @@ Options `--load`, `--sload`, `--all` have no effect if a server route is being c
 
 ### Examples
 
-`mkrt .` - Adds a page route to your project's routes root (src/routes by default in SvelteKit).
+All examples assume the default configuration.
 
-`mkrt about` - creates an /about page route, unless you've specified otherwise in your config.
+`mkrt .` - creates `+page.svelte` in your project's routes root (src/routes by default in SvelteKit).
 
-`mkrt about --load` - creates an /about page route, with a `+page.[ts|js]` file.
+`mkrt about` - creates `about/+page.svelte`
 
-`mkrt about -l --sload` - creates a layout in /about, with a `+layout.server.[ts|js]` file.
+`mkrt about --load` - creates `about/+page.svelte` and `about/+page.ts`
 
-`mkrt about -l hello` - creates a named layout in /about.
+`mkrt about -l --sload` - creates `about/+layout.svelte` and `about/+layout.server.ts`
 
-`mkrt api/auth -s` - creates an api/auth server route. This is assuming your default config is set for `page` routes, and you want to override it by creating a `server` route this time.
+`mkrt about -l hello` - creates `about/layout-hello.svelte`
 
-`mkrt company -n corp` - creates a page route with a named layout; so the svelte file will be `+page@corp.svelte`.
+`mkrt api/auth -s` - creates `api/auth/+server.ts`
+
+`mkrt company -n corp` - creates `company/+page@corp.svelte`
 
 
 ## Custom Codekit Templates
