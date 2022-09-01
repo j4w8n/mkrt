@@ -40,7 +40,7 @@ When using mkrt, you'll want to be in your project's root directory.
 
 Directories will be created, if they don't exist. If any of the to-be-created route files already exist in the directory, then you'll be prompted whether you want to overwrite them or not.
 
-> Use `.` to create a route in your project route's directory ('src/routes' by default in SvelteKit)
+> Use `.` to create a route in your project's root route directory ('src/routes' by default in SvelteKit)
 
 Depending on which type of route you create, these files are created by default.
 
@@ -86,6 +86,8 @@ All examples assume the default configuration.
 `mkrt \(app\) -l` - creates `(app)/+layout.svelte`
 
 `mkrt company -n \(app\)` - creates `company/+page@(app).svelte`
+
+`mkrt company -n .` - creates `company/+page@.svelte`
 
 
 ## Custom Codekit Templates
