@@ -42,23 +42,22 @@ if (fs.existsSync(config_file)) {
 
 program
   .name('mkrt')
-  .usage('<path>')
-  .argument('<path>', 'route to create')
+  .usage('<path> [options]')
+  .argument('<path>', 'Directory path for route or layout.')
   .description('Create SvelteKit routes, fast')
   .version(packageJson.version)
-  .option('-n, --named-layout <layout-name>', 'use this named layout for the route')
-  .option('-p, --page', 'route is a +page.svelte file')
-  .option('-l, --layout [name]', 'route is a +layout.svelte file, with optional named assignment')
-  .addOption(new Option('-s, --server', 'route is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
-  .addOption(new Option('--load', 'creates a +page.[ts|js] file').conflicts('server'))
-  .addOption(new Option('--sload', 'creates a +page.server.[ts|js] file').conflicts('server'))
-  .addOption(new Option('--all', 'creates all three route files for page or layout routes').conflicts('load').conflicts('sload').conflicts('server'))
+  .option('-n, --named-layout [layout-name]', 'Use this layout. Leave blank to reference the root layout.')
+  .option('-p, --page', 'Is a +page.svelte file')
+  .option('-l, --layout', 'Is a +layout.svelte file.')
+  .addOption(new Option('-s, --server', 'Is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
+  .addOption(new Option('--load', 'Creates a +page.[ts|js] file').conflicts('server'))
+  .addOption(new Option('--sload', 'Creates a +page.server.[ts|js] file').conflicts('server'))
+  .addOption(new Option('--all', 'Creates all three route files for page or layout routes').conflicts('load').conflicts('sload').conflicts('server'))
   .action(async (name, options) => {
     let files, language
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
     const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
-    const layout_name = typeof options.layout !== 'boolean' ? `-${options.layout}` : ''
     const cli_option = ['page','server','layout'].find((key) => options[key])
     const route = cli_option ?? config?.route ?? 'page'
     const codekit = config?.codekit ?? true
@@ -69,18 +68,18 @@ program
 
     if (config?.templates) {
       if (typeof config?.templates !== 'string') {
-        console.log(red(`Templates configuration is not valid. Expecting string, got ${typeof config?.templates} Exiting...`))
+        console.log(red(`Templates configuration is not valid. Expecting string, got ${typeof config.templates} Exiting...`))
         process.exit(1)
       }
     }
     if (config?.route) {
-      if (config?.route !== 'page' && config?.route !== 'server') {
+      if (config.route !== 'page' && config.route !== 'server') {
         console.log(red('Route configuration is not valid. Exiting...'))
         process.exit(1)
       }
     }
     if (config?.codekit) {
-      if (config?.codekit !== 'true' && config?.codekit !== 'false') {
+      if (config.codekit !== 'true' && config.codekit !== 'false') {
         console.log(red('Codekit configuration is not valid. Exiting...'))
         process.exit(1)
       }
@@ -127,7 +126,7 @@ program
         }
         break;
       case 'layout':
-        files = [`+layout${layout_name}${named_layout}.svelte`]
+        files = [`+layout${named_layout}.svelte`]
         if (all) {
           files.push(`+layout.${language}`)
           files.push(`+layout.server.${language}`)
@@ -176,12 +175,6 @@ program
           // file references a named layout, adjusting template filename for copy
           const suffix = ref_named_layout[1].split('.')       
           template = `${ref_named_layout[0]}.${suffix.slice(1)}`
-        }
-        const ref_layout_name = files[i].split('-')
-        if (ref_layout_name.length > 1) {
-          // file is a named layout, adjusting template filename for copy
-          const suffix = ref_layout_name[1].split('.')
-          template = `${ref_layout_name[0]}.${suffix.slice(1)}`
         }
         if (files[i].split('.')[1] === 'svelte') {
           // add .js or .ts to end of +page.svelte or +layout.svelte file, for template filename copy
