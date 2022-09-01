@@ -43,10 +43,10 @@ if (fs.existsSync(config_file)) {
 program
   .name('mkrt')
   .usage('<path> [options]')
-  .argument('<path>', 'Directory path for route or layout.')
+  .argument('<path>', 'Directory path for route or layout. Use `.` for root.')
   .description('Create SvelteKit routes, fast')
   .version(packageJson.version)
-  .option('-n, --named-layout [layout-name]', 'Use this layout. Leave blank to reference the root layout.')
+  .option('-n, --named-layout <layout-name>', 'Layout to use for the route. Use `.` to reference the root layout.')
   .option('-p, --page', 'Is a +page.svelte file')
   .option('-l, --layout', 'Is a +layout.svelte file.')
   .addOption(new Option('-s, --server', 'Is a +server.[ts|js] file').conflicts('page').conflicts('layout').conflicts('namedLayout'))
@@ -57,7 +57,7 @@ program
     let files, language
     const root = route_source ?? 'src/routes'
     const dir_path = name === '.' ? root : path.join(root, name)
-    const named_layout = options.namedLayout ? `@${options.namedLayout}` : ''
+    const named_layout = options.namedLayout ? options.namedLayout === '.' ? '@' : `@${options.namedLayout}` : ''
     const cli_option = ['page','server','layout'].find((key) => options[key])
     const route = cli_option ?? config?.route ?? 'page'
     const codekit = config?.codekit ?? true
