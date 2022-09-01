@@ -14,7 +14,7 @@ See the [routing docs](https://kit.svelte.dev/docs/routing) and [migration guide
 
 ## Installation
 
-`[p]npm add -g mkrt` or `yarn global add mkrt`
+`npm install -g mrkt`, `pnpm add -g mkrt` or `yarn global add mkrt`
 
 ### Configuration File
 
@@ -48,24 +48,26 @@ Depending on which type of route you create, these files are created by default.
 - layout routes => +layout.svelte
 - server routes => +server.ts
 
+If you choose to use mkrt for creating (group) directories, you'll need to escape the parenthesis. `mkrt \(app\) -l`
+
 ### CLI Options
 
 #### Standalone
 
-- `-n, --named-layout <name>` Create a page route, or layout, that references a named layout. Ex, +page@alternate.svelte or +layout@root.svelte
+- `-n, --named-layout <name>` Create a page route or layout, that references another layout in the heirarchy. This can be used for regular layouts or (group) layouts. Use `.` to reference the root layout.
 - `--load` Create a +[page|layout].[ts|js] file with the route.
 - `--sload` Create a +[page|layout].server.[ts|js] file with the route.
 - `--all` Convenience method for using `--load` and `--sload` at the same time.
 
 Options `--load`, `--sload`, `--all` have no effect if a server route is being created.
 
-> For more information about using -n with layout files, checkout [Named Layouts](https://kit.svelte.dev/docs/layouts#named-layouts) in the docs.
+> For more information about using -n to reference layouts, checkout [Advanced Layouts](https://kit.svelte.dev/docs/advanced-routing#advanced-layouts) in the docs.
 
 #### Overrides for defaults and config file
 
 - `-p, --page` route is a +page.svelte file
-- `-s, --server` route is a +server.[ts|js] file
-- `-l, --layout [name]` Create a +layout.svelte file, with optional name parameter to create a named layout
+- `-s, --server` route is a +server.ts file
+- `-l, --layout` Create a +layout.svelte file, either for a route or a (group) layout
 
 ### Examples
 
@@ -79,11 +81,11 @@ All examples assume the default configuration.
 
 `mkrt about -l --sload` - creates `about/+layout.svelte` and `about/+layout.server.ts`
 
-`mkrt about -l hello` - creates `about/layout-hello.svelte`
-
 `mkrt api/auth -s` - creates `api/auth/+server.ts`
 
-`mkrt company -n corp` - creates `company/+page@corp.svelte`
+`mkrt \(app\) -l` - creates `(app)/+layout.svelte`
+
+`mkrt company -n \(app\)` - creates `company/+page@(app).svelte`
 
 
 ## Custom Codekit Templates
